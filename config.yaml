@@ -1,0 +1,125 @@
+api:
+  endpoints:
+    # Auth
+    loginKey: "/api/Auth/loginKey"
+
+    # Orders
+    placeOrder: "/api/Order/place"
+    modifyOrder: "/api/Order/modify"
+    cancelOrder: "/api/Order/cancel"
+    searchOpenOrders: "/api/Order/searchOpen"
+
+    # Positions
+    searchOpenPositions: "/api/Position/searchOpen"
+    closePosition: "/api/Position/closeContract"
+
+    # Contracts
+    searchContracts: "/api/Contract/search"
+    searchContractById: "/api/Contract/searchById"
+    listAvailableContracts: "/api/Contract/available"
+
+commands:
+  auth: "api.auth"
+  client: "api.client"
+  config: "api.config"
+  available: "api.endpoints.listAvailableContracts"
+  close_position: "api.endpoints.closePosition"
+  searchById: "api.endpoints.searchContractById"
+  search: "api.endpoints.searchContracts"
+  searchOpenOrders: "api.endpoints.searchOpenOrders"
+  searchOpenPositions: "api.endpoints.searchOpenPositions"
+  cancel: "api.endpoints.cancelOrder"
+  placeOrder: "api.endpoints.placeOrder"
+  modify: "api.endpoints.modifyOrder"
+  brackets: "api.endpoints.bracketOrders"
+
+logging:
+  enable_api_logging: true
+  dry_run_mode: false
+
+config_horaire:
+  path: "E:/sdecor/Development/Bot_IA_DEV_UB/VWAP_optimizer_V2/config/config_optimale_vwap_mr_ALL.json"
+
+signal_rules:
+  - rule: "vwap_threshold"
+    params:
+      min_prob: 0.7
+      use_vwap_filter: true
+
+general:
+  timezone: "Europe/Paris"
+  evaluation_window_minutes: 5
+
+general:
+  TICK_SIZE: 0.03125
+  TICK_VALUE: 31.25
+  ATR_PERIOD: 14
+  DEFAULT_VWAP_PERIOD: 14
+  DEFAULT_ENTRY_THRESHOLD: 2.0
+  DEFAULT_EXIT_TYPE: "cross"
+  DEFAULT_EXIT_THRESHOLD: 0.5
+  DEFAULT_TP_TYPE: "vwap_level"
+  DEFAULT_TP_TICKS: 4
+  DEFAULT_FIXED_LOTS: 3
+  ATR_MULTIPLIER_FOR_SL: 1.5
+  MAX_EQUITY_DD_USD: 800.0
+  timezone: "UTC"  # ou "CET"
+
+optimizer:
+  VWAP_BASE_PERIOD: "session_RTH"
+  ENTRY_THRESHOLDS: [0.5, 0.7, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
+  TP_TYPES: ["vwap_level", "fixed_ticks"]
+  VWAP_PERIODS_TO_TEST: ["session_RTH"]
+  ENTRY_THRESHOLDS_TO_TEST: [1.5, 2.0]
+  ML_THRESHOLDS_TO_TEST: [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95]
+  SCORE_COMPOSITE_DD_PENALTY_MULTIPLIER: 1.0
+
+model:
+  path: "E:/sdecor/Development/Bot_IA_DEV_UB/VWAP_optimizer_V2/config/xgb_model_for_vwap_mr_fixed_lots.json"
+  features:
+    - normalized_dist_to_vwap
+    - vwap_slope_5
+    - volume_relative_10
+    - hour
+    - minute
+    - atr
+    - ret_3
+    - ret_6
+    - ret_12
+    - volatility_6
+    - volatility_12
+    - range_6
+    - 15min_ema21
+    - 15min_rsi14
+    - 15min_vol12
+    - 30min_ema21
+    - 30min_rsi14
+    - 30min_vol12
+    - 1h_ema21
+    - 1h_rsi14
+    - 1h_vol12
+    - 4h_ema21
+    - 4h_rsi14
+    - 4h_vol12
+    - day_ema21
+    - day_rsi14
+    - day_vol12
+
+output_signals: "output/signals.csv"
+
+data:
+  data_path: "E:/sdecor/Development/data/"
+  input_5m: "CBOT_UB1!, 5.csv"
+
+  tf_files:
+    15min: "CBOT_UB1!, 15.csv"
+    30min: "CBOT_UB1!, 30.csv"
+    1h: "CBOT_UB1!, 60.csv"
+    4h: "CBOT_UB1!, 240.csv"
+    day: "CBOT_UB1!, 1D.csv"
+
+trading:
+  symbol: "CBOT_UB1!"     # instrument à trader
+  order_type: "market"     # market / limit … (selon ton API)
+  time_in_force: "DAY"     # ou "GTC" (selon ton API)
+  dry_run: true            # true = pas d’ordre réel
