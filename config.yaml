@@ -63,7 +63,7 @@ general:
   DEFAULT_FIXED_LOTS: 3
   ATR_MULTIPLIER_FOR_SL: 1.5
   MAX_EQUITY_DD_USD: 800.0
-  timezone: "UTC"  # ou "CET"
+  timezone: "UTC"
 
 optimizer:
   VWAP_BASE_PERIOD: "session_RTH"
@@ -119,7 +119,7 @@ data:
     day: "CBOT_UB1!, 1D.csv"
 
 trading:
-  symbol: "CBOT_UB1!"     # instrument à trader
-  order_type: "market"     # market / limit … (selon ton API)
-  time_in_force: "DAY"     # ou "GTC" (selon ton API)
-  dry_run: true            # true = pas d’ordre réel
+  symbol: "CBOT_UB1!"
+  order_type: "market"
+  time_in_force: "DAY"
+  dry_run: true

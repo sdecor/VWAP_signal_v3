@@ -15,6 +15,18 @@ Usage:
 import argparse
 import sys
 import os
+# start_trading.py (ajouter au tout début du fichier)
+
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("trading.log", encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
 
 def main():
     # S'assure que la racine est dans le PYTHONPATH

@@ -117,3 +117,4 @@ cython_debug/
 *.temp
 .env
 *.json
+*.zip
