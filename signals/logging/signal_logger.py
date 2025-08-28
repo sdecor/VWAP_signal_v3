@@ -1,75 +1,68 @@
 # signals/logging/signal_logger.py
 
-import os
 import csv
+import os
 from typing import Optional, Dict, Any
 
+
 class SignalLogger:
-    """
-    Écrit les signaux et la performance dans des CSV append-only.
-    - signal: un enregistrement par signal généré (même sans exécution).
-    - perf: snapshots réguliers (mark-to-market).
-    """
-
-    def __init__(self, signal_csv_path: str, perf_csv_path: str):
+    def __init__(self, signal_csv_path: str, performance_csv_path: str):
         self.signal_csv_path = signal_csv_path
-        self.perf_csv_path = perf_csv_path
+        self.performance_csv_path = performance_csv_path
+        os.makedirs(os.path.dirname(signal_csv_path) or ".", exist_ok=True)
+        os.makedirs(os.path.dirname(performance_csv_path) or ".", exist_ok=True)
+        self._ensure_signal_header()
+        self._ensure_perf_header()
 
-        # Assure l'existence des dossiers
-        os.makedirs(os.path.dirname(signal_csv_path), exist_ok=True)
-        os.makedirs(os.path.dirname(perf_csv_path), exist_ok=True)
-
-        # Crée les headers si fichiers absents
-        if not os.path.exists(signal_csv_path):
-            with open(signal_csv_path, "w", newline="", encoding="utf-8") as f:
-                w = csv.DictWriter(f, fieldnames=[
-                    "timestamp", "symbol", "action", "prob", "price",
-                    "qty", "reason", "session", "vwap", "spread_to_vwap",
-                    "features", "extra"
+    def _ensure_signal_header(self):
+        if not os.path.exists(self.signal_csv_path):
+            with open(self.signal_csv_path, "w", newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                w.writerow([
+                    "timestamp","symbol","action","prob","price","qty","reason","session","vwap","spread_to_vwap","features","extra"
                 ])
-                w.writeheader()
 
-        if not os.path.exists(perf_csv_path):
-            with open(perf_csv_path, "w", newline="", encoding="utf-8") as f:
-                w = csv.DictWriter(f, fieldnames=[
-                    "timestamp", "equity", "realized_pnl", "unrealized_pnl",
-                    "drawdown", "max_equity", "n_trades", "position_size",
-                    "last_price"
+    def _ensure_perf_header(self):
+        if not os.path.exists(self.performance_csv_path):
+            with open(self.performance_csv_path, "w", newline="", encoding="utf-8") as f:
+                w = csv.writer(f)
+                w.writerow([
+                    "timestamp","equity","realized_pnl","unrealized_pnl","drawdown","max_equity","n_trades","position_size","last_price"
                 ])
-                w.writeheader()
 
     def log_signal(
         self,
         *,
         timestamp: str,
         symbol: str,
-        action: str,                # "BUY" | "SELL" | "FLAT"
+        action: Optional[str],
         prob: Optional[float],
         price: Optional[float],
-        qty: Optional[float] = None,
-        reason: Optional[str] = None,
-        session: Optional[str] = None,
-        vwap: Optional[float] = None,
-        spread_to_vwap: Optional[float] = None,
-        features: Optional[Dict[str, Any]] = None,
+        qty: Optional[float],
+        reason: Optional[str],
+        session: Optional[str],
+        vwap: Optional[float],
+        spread_to_vwap: Optional[float],
+        features: Optional[Dict[str, Any]],
         extra: Optional[Dict[str, Any]] = None,
     ) -> None:
-        row = {
-            "timestamp": timestamp,
-            "symbol": symbol,
-            "action": action,
-            "prob": prob,
-            "price": price,
-            "qty": qty,
-            "reason": reason,
-            "session": session,
-            "vwap": vwap,
-            "spread_to_vwap": spread_to_vwap,
-            "features": repr(features) if features is not None else None,
-            "extra": repr(extra) if extra is not None else None,
-        }
+        act = (action or "").upper()
+        row = [
+            timestamp,
+            symbol,
+            act,  # ✅ "BUY"/"SELL"
+            (None if prob is None else f"{prob:.6f}"),
+            (None if price is None else f"{price:.6f}"),
+            (None if qty is None else f"{qty:.6f}"),
+            reason or "",
+            session or "",
+            (None if vwap is None else f"{vwap:.6f}"),
+            (None if spread_to_vwap is None else f"{spread_to_vwap:.6f}"),
+            (features if features is not None else ""),
+            (extra if extra is not None else ""),
+        ]
         with open(self.signal_csv_path, "a", newline="", encoding="utf-8") as f:
-            csv.DictWriter(f, fieldnames=row.keys()).writerow(row)
+            csv.writer(f).writerow(row)
 
     def log_performance_snapshot(
         self,
@@ -84,16 +77,16 @@ class SignalLogger:
         position_size: float,
         last_price: Optional[float],
     ) -> None:
-        row = {
-            "timestamp": timestamp,
-            "equity": equity,
-            "realized_pnl": realized_pnl,
-            "unrealized_pnl": unrealized_pnl,
-            "drawdown": drawdown,
-            "max_equity": max_equity,
-            "n_trades": n_trades,
-            "position_size": position_size,
-            "last_price": last_price,
-        }
-        with open(self.perf_csv_path, "a", newline="", encoding="utf-8") as f:
-            csv.DictWriter(f, fieldnames=row.keys()).writerow(row)
+        row = [
+            timestamp,
+            f"{equity:.6f}",
+            f"{realized_pnl:.6f}",
+            f"{unrealized_pnl:.6f}",
+            f"{drawdown:.6f}",
+            f"{max_equity:.6f}",
+            n_trades,
+            f"{position_size:.6f}",
+            (None if last_price is None else f"{last_price:.6f}"),
+        ]
+        with open(self.performance_csv_path, "a", newline="", encoding="utf-8") as f:
+            csv.writer(f).writerow(row)

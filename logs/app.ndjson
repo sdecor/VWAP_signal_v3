@@ -1,0 +1,33 @@
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 17:41:38,834", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 17:41:38,959"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 17:41:38,960"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 17:41:46,648", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 17:41:46,650"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 17:41:46,650"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 17:45:13,954", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 17:45:13,955"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 17:45:13,955"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 17:52:44,928", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 17:52:44,931"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 17:52:44,931"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 17:59:57,247", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 17:59:57,250"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 17:59:57,250"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 18:08:26,161", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 18:08:26,164"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 18:08:26,164"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 18:13:51,453", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 18:13:51,459"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 18:13:51,459"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 18:16:51,205", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 18:16:51,208"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 18:16:51,209"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 19:00:07,875", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 19:00:07,880"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 19:00:07,881"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 20:44:06,769", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 20:44:06,773"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 20:44:06,773"}
+{"level": "INFO", "logger": "app", "msg": "JSON logging enabled", "timestamp": "2025-08-28 20:47:33,990", "path": "logs/app.ndjson"}
+{"level": "INFO", "logger": "root", "msg": "🌓 Mode SHADOW activé (dual: réel + simulation).", "timestamp": "2025-08-28 20:47:33,995"}
+{"level": "INFO", "logger": "root", "msg": "✅ Contexte live initialisé | mode=shadow_dual", "timestamp": "2025-08-28 20:47:33,995"}

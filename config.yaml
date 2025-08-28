@@ -46,6 +46,10 @@ logging:
   signal_csv: "logs/signals_log.csv"
   performance_csv: "logs/performance_log.csv"
 
+  # Fichiers de logs pour le shadow (uniquement si mode = shadow_dual)
+  shadow_signal_csv: "logs/shadow_signals_log.csv"
+  shadow_performance_csv: "logs/shadow_performance_log.csv"
+
 
 config_horaire:
   path: "E:/sdecor/Development/Bot_IA_DEV_UB/VWAP_optimizer_V2/config/config_optimale_vwap_mr_ALL.json"
@@ -129,7 +133,24 @@ data:
     day: "CBOT_UB1!, 1D.csv"
 
 trading:
+  # Choisir 1 parmi:
+  # - "dry_run"      → pas d’envoi d’ordres, simule tout
+  # - "prod"         → envoie ordres réels, pas de shadow
+  # - "shadow_dual"  → envoie ordres réels ET simule en parallèle (shadow)
+  mode: "shadow_dual"    # <-- mets "prod" ou "dry_run" selon le besoin
   symbol: "CBOT_UB1!"
   order_type: "market"
   time_in_force: "DAY"
-  dry_run: true
+  dry_run: false         # rétro-compat pour ancien code; ignoré si 'mode' est défini
+
+
+monitoring:
+  json_logs:
+    enabled: true
+    file: "logs/app.ndjson"
+    level: "INFO"
+  prometheus:
+    enabled: true
+    addr: "0.0.0.0"
+    port: 9108
+    namespace: "vwap_signal"

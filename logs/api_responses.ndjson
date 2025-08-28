@@ -14,3 +14,14 @@
 {"event": "request", "endpoint": "placeOrder", "attempt": 1, "payload": {"symbol": "CBOT_UB1!", "quantity": 1, "clientOrderId": "vwap-3a60655a203447e1"}, "request_id": "vwap-3a60655a203447e1", "ts_epoch_ms": 1756385416787}
 {"event": "response", "endpoint": "placeOrder", "attempt": 1, "request_id": "vwap-3a60655a203447e1", "response": {"statusCode": 200, "id": "NT"}, "statusCode": 200, "ts_epoch_ms": 1756385416794}
 {"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756385527225}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756410046727}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756410046813}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756410063646}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756410063693}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756410752111}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756410752129}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756411203714}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756411203809}
+{"event": "request", "endpoint": "placeOrder", "attempt": 1, "payload": {"symbol": "CBOT_UB1!", "quantity": 1, "clientOrderId": "4e153dc2d2434ba5b6eb60ff105bf683"}, "request_id": "4e153dc2d2434ba5b6eb60ff105bf683", "ts_epoch_ms": 1756411558121}
+{"event": "response", "endpoint": "placeOrder", "attempt": 1, "response": {"ok": true, "echo": {"symbol": "CBOT_UB1!", "quantity": 1, "clientOrderId": "4e153dc2d2434ba5b6eb60ff105bf683"}}, "request_id": "4e153dc2d2434ba5b6eb60ff105bf683", "ts_epoch_ms": 1756411558127}
+{"event": "import_error", "endpoint": "placeOrder", "error": "APIClient import failed", "ts_epoch_ms": 1756411558151}
