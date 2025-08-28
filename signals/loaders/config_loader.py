@@ -3,6 +3,7 @@
 import os
 import json
 import logging
+from signals.utils.config_reader import load_config
 
 def load_json_config(path: str) -> dict:
     """
@@ -20,3 +21,28 @@ def load_json_config(path: str) -> dict:
     except json.JSONDecodeError as e:
         logging.error(f"[Config] JSON invalide ({path}) : {e}")
         raise ValueError(f"Format JSON invalide dans {path}")
+
+def get_symbol() -> str:
+    cfg = load_config()
+    return (cfg.get("trading", {}) or {}).get("symbol", "UNKNOWN")
+
+
+def get_order_type() -> str:
+    cfg = load_config()
+    return (cfg.get("trading", {}) or {}).get("order_type", "market")
+
+
+def get_time_in_force() -> str:
+    cfg = load_config()
+    return (cfg.get("trading", {}) or {}).get("time_in_force", "DAY")
+
+
+def get_dry_run_mode() -> bool:
+    cfg = load_config()
+    return (cfg.get("trading", {}) or {}).get("dry_run", True)
+
+
+def get_default_lots() -> int:
+    cfg = load_config()
+    # par défaut 1 lot si non défini
+    return int((cfg.get("general", {}) or {}).get("DEFAULT_FIXED_LOTS", 1))

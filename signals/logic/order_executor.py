@@ -1,56 +1,65 @@
 # signals/logic/order_executor.py
+"""
+Shim de compatibilité pour l'exécution d'ordres.
+Délègue la logique vers signals.logic.execution.*
+- API moderne : execute_and_track_order(...)
+- API legacy  : execute_signal(...)
+"""
 
-from signals.loaders.config_loader import (
-    get_symbol,
-    get_order_type,
-    get_time_in_force,
-    get_dry_run_mode,
-    get_default_lots,
+from typing import Optional, Dict, Any
+
+from signals.metrics.perf_tracker import PerformanceTracker
+from signals.logic.execution import (
+    build_order_payload,             # utile si du code l’utilisait déjà
+    execute_and_track_order as _exec_and_track,
+    execute_signal_legacy as _exec_legacy,
 )
-from signals.utils.env_loader import ACCOUNT_ID  # sensible: .env
-from signals.api.client import APIClient
+
+__all__ = [
+    "build_order_payload",
+    "execute_and_track_order",
+    "execute_signal",
+]
 
 
-def build_order_payload(signal: dict) -> dict:
+def execute_and_track_order(
+    *,
+    symbol: str,
+    side: str,                  # "BUY" | "SELL"
+    qty: float,
+    limit_price: Optional[float],
+    market_price: Optional[float],
+    tracker: Optional[PerformanceTracker] = None,
+) -> Dict[str, Any]:
     """
-    Construit le payload pour l’endpoint placeOrder à partir du signal.
-    Adapte les clés selon le schéma attendu par ton API.
+    Nouvelle API : en prod appelle l'API et met à jour le tracker à la confirmation (ou fallback).
+    En dry-run, simule un fill et met à jour le tracker.
     """
-    side = signal["signal"]  # "BUY" / "SELL"
-    qty = signal.get("qty") or get_default_lots()
-
-    payload = {
-        "accountId": ACCOUNT_ID,
-        "symbol": get_symbol(),
-        "side": side,                  # BUY / SELL
-        "orderType": get_order_type(), # market / limit ...
-        "timeInForce": get_time_in_force(),
-        "quantity": qty,
-        # Optionnels selon API :
-        # "price": signal.get("limit_price"),
-        # "stopPrice": signal.get("stop_price"),
-        # "clientOrderId": signal.get("client_order_id"),
-        # "tag": "vwap_mr_live",
-    }
-    return payload
+    return _exec_and_track(
+        symbol=symbol,
+        side=side,
+        qty=qty,
+        limit_price=limit_price,
+        market_price=market_price,
+        tracker=tracker,
+    )
 
 
-def execute_signal(signal: dict) -> dict:
+def execute_signal(
+    signal: Dict[str, Any],
+    *,
+    tracker: Optional[PerformanceTracker] = None,
+    market_price: Optional[float] = None,
+    limit_price: Optional[float] = None,
+) -> Dict[str, Any]:
     """
-    Exécute le signal : dry-run (log) ou envoi réel via APIClient.
-    Retourne la réponse (ou un dict d’info en dry-run).
+    API legacy : conserve la signature historique.
+    - En dry-run : log virtuel + MAJ tracker (si fourni).
+    - En prod    : délègue à execute_and_track_order().
     """
-    payload = build_order_payload(signal)
-    if get_dry_run_mode():
-        print(f"🟡 DRY-RUN → PlaceOrder {payload}")
-        return {"status": "dry_run", "payload": payload}
-
-    client = APIClient()
-    print(f"🟢 LIVE → PlaceOrder {payload}")
-    try:
-        resp = client.post("placeOrder", payload=payload, debug=False)
-        print(f"✅ Ordre envoyé. Réponse API: {resp}")
-        return {"status": "ok", "response": resp, "payload": payload}
-    except Exception as e:
-        print(f"❌ Échec envoi d’ordre: {e}")
-        return {"status": "error", "error": str(e), "payload": payload}
+    return _exec_legacy(
+        signal,
+        tracker=tracker,
+        market_price=market_price,
+        limit_price=limit_price,
+    )

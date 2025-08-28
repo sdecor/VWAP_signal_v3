@@ -36,6 +36,9 @@ commands:
 logging:
   enable_api_logging: true
   dry_run_mode: false
+  signal_csv: "logs/signals_log.csv"
+  performance_csv: "logs/performance_log.csv"
+
 
 config_horaire:
   path: "E:/sdecor/Development/Bot_IA_DEV_UB/VWAP_optimizer_V2/config/config_optimale_vwap_mr_ALL.json"
