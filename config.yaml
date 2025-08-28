@@ -18,6 +18,13 @@ api:
     searchContractById: "/api/Contract/searchById"
     listAvailableContracts: "/api/Contract/available"
 
+  timeout_seconds: 5
+  max_retries: 3
+  backoff_initial_ms: 200
+  backoff_max_ms: 2000
+  retryable_statuses: [429, 500, 502, 503, 504]
+  audit_log_file: "logs/api_responses.ndjson"
+
 commands:
   auth: "api.auth"
   client: "api.client"
